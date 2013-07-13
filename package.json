@@ -1,0 +1,16 @@
+{
+  "name": "SayWhat-and-SpokenNim",
+  "version": "0.0.1",
+  "author": {
+    "name": "Andrew Waterman",
+    "email": "awaterma@awaterma.net"
+  },
+  "description": "Some work with spoken voices on mac osx. Stream input speaking utility for fun and a spoken version of the game of Nim.",
+  "devDependencies": {},
+  "dependencies": {
+    "through": "~2.3.4",
+    "say": "~0.5.0",
+    "q": "~0.9.6"
+  },
+  "license": "GPL3"
+}
