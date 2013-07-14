@@ -1,21 +1,21 @@
-var say = require('say');
+var Say = require('ribbons.out.say.mac');
 var through = require('through');
-var Q = require('Q');
 
-var voice = 'Daniel';
+var voice = 'Vicki';
 var coins = 17;
 
-var deferred = Q.defer();
-deferred.promise.then(
-    function (voice, text) {
-    	say.speak(voice, text);
-});
+var spkr = new Say(voice);
+spkr.init();
+spkr.start();
 
-deferred.resolve(voice, "Welcome to the game of Nim. In this game, we will start with a pile of " + coins + 
-          " coins on the table. On each turn, you and I will alternately take between 1 and 3 coins" +
-          " from the table. The player who takes the last coin loses.\n");
-//deferred.resolve(voice, "How many coins will you take from the table to start?");
-
+spkr.politelySay("Welcome to the game of Nim.");
+spkr.politelySay("In this game, we will start with a pile of " + coins + 
+	" coins on the table.");
+spkr.politelySay("On each turn, you and I will alternately take between 1 and 3 coins" +
+          " from the table.");
+spkr.politelySay("The player who takes the last coin loses.\n");
+spkr.politelySay("How many coins will you take from the table to start?");
+      
 /* Play the Game */
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
@@ -28,19 +28,19 @@ function bid(data) {
     }
     coins -= data;
     if (coins <=1) {
-        say.speak(voice, "I lose.");
-        say.speak(voice, "You took " + data + ". Leaving " + coins + "left. I have no move.");
+        spkr.politelySay(voice, "I lose.");
+        spkr.politelySay("You took " + data + ". Leaving " + coins + "left. I have no move.");
         this.pause();
         end();
     } else {
         var num = nextMove(coins);
         coins -= num;
-        say.speak(voice, "You took " + data + ". I take " + num);
-        say.speak(voice, "There are now " + coins + " coins left.");
+        spkr.politelySay("You took " + data + ". I take " + num);
+        spkr.politelySay("There are now " + coins + " coins left.");
         if (coins >1) {
-            ("How many will you take now?");
+            spkr.politelySay("How many will you take now?");
         } else {
-            ("Apparently, you have no moves left. This means that I, a simple computer, has beaten you!");
+            spkr.politelySay("Apparently, you have no moves left. This means that I, a simple computer, has beaten you!");
             this.pause();
             end();
         }
@@ -71,6 +71,6 @@ function IsBadPosition(nCoins) {
 }
 
 function end() {
-    say.speak(voice, "Our game is now over. Thank you for playing.");
+    spkr.politelySay("Our game is now over. Thank you for playing.");
     process.stdout.write("\n<<end>>\n\n");
 }
